@@ -1,3 +1,5 @@
+use norm::core::Application;
+
 fn main() {
-    println!("norm");
+    Application::new().run();
 }
