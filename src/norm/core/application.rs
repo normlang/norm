@@ -9,12 +9,17 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    /// Create new project
+    /// Create new project with given name
     Create {
         /// Project name
         #[arg(required = true)]
         name: String,
 
+        #[command(flatten)]
+        target: Target,
+    },
+    /// Create new project in current directory
+    Init {
         #[command(flatten)]
         target: Target,
     },
@@ -51,6 +56,13 @@ impl Application {
                     println!("create lib {name}");
                 } else {
                     println!("create app {name}");
+                }
+            }
+            Commands::Init { target } => {
+                if target.lib {
+                    println!("create lib");
+                } else {
+                    println!("create app");
                 }
             }
             Commands::Build => {
