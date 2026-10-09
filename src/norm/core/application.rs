@@ -1,4 +1,5 @@
 use clap::{Args, Parser, Subcommand};
+use normlib::project;
 
 #[derive(Parser, Debug)]
 #[command(about = "Command-line interface (CLI) for managing Norm code", version, long_about = None)]
@@ -47,15 +48,15 @@ impl Application {
         Self {}
     }
 
-    pub fn run(&self) {
+    pub fn run(&self) -> Result<(), Box<dyn std::error::Error>> {
         let cli = Cli::parse();
 
         match cli.command {
             Commands::Create { name, target } => {
                 if target.lib {
-                    println!("create lib {name}");
+                    project::create(&name, project::Target::Library)?;
                 } else {
-                    println!("create app {name}");
+                    project::create(&name, project::Target::Application)?;
                 }
             }
             Commands::Init { target } => {
@@ -66,11 +67,13 @@ impl Application {
                 }
             }
             Commands::Build => {
-                println!("build app");
+                project::build()?;
             }
             Commands::Run => {
-                println!("run app");
+                project::run()?;
             }
         }
+
+        Ok(())
     }
 }

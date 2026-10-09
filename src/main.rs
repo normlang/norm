@@ -1,5 +1,6 @@
 use norm::core::Application;
 
-fn main() {
-    Application::new().run();
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    Application::new().run()?;
+    Ok(())
 }

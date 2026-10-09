@@ -115,7 +115,12 @@ name = "norm"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "normlib",
 ]
+
+[[package]]
+name = "normlib"
+version = "0.1.0"
 
 [[package]]
 name = "once_cell_polyfill"
