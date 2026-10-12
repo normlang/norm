@@ -1,5 +1,5 @@
 use clap::{Args, Parser, Subcommand};
-use normlib::project;
+use normlib::file::project;
 
 #[derive(Parser, Debug)]
 #[command(about = "Command-line interface (CLI) for managing Norm code", version, long_about = None)]
