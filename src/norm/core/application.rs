@@ -10,17 +10,53 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
+    /// Manage normspaces
+    Normspace {
+        #[command(subcommand)]
+        command: Normspace,
+    },
+
+    /// Manage workspaces
+    Workspace {
+        #[command(subcommand)]
+        command: Workspace,
+    },
+
+    /// Manage projects
+    Project {
+        #[command(subcommand)]
+        command: Project,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+enum Normspace {
+    /// Create new normspace with given name
+    Add {
+        /// Normspace name
+        #[arg(required = true)]
+        name: String,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+enum Workspace {
+    /// Create new workspace with given name
+    Add {
+        /// Workspace name
+        #[arg(required = true)]
+        name: String,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+enum Project {
     /// Create new project with given name
-    Create {
+    Add {
         /// Project name
         #[arg(required = true)]
         name: String,
 
-        #[command(flatten)]
-        target: Target,
-    },
-    /// Create new project in current directory
-    Init {
         #[command(flatten)]
         target: Target,
     },
@@ -52,26 +88,35 @@ impl Application {
         let cli = Cli::parse();
 
         match cli.command {
-            Commands::Create { name, target } => {
-                if target.lib {
-                    project::create(&name, project::Target::Library)?;
-                } else {
-                    project::create(&name, project::Target::Application)?;
+            Commands::Normspace { command } => match command {
+                Normspace::Add { name } => {
+                    println!("add normspace {name}");
                 }
-            }
-            Commands::Init { target } => {
-                if target.lib {
-                    println!("create lib");
-                } else {
-                    println!("create app");
+            },
+
+            Commands::Workspace { command } => match command {
+                Workspace::Add { name } => {
+                    println!("add workspace {name}");
                 }
-            }
-            Commands::Build => {
-                project::build()?;
-            }
-            Commands::Run => {
-                project::run()?;
-            }
+            },
+
+            Commands::Project { command } => match command {
+                Project::Add { name, target } => {
+                    if target.lib {
+                        project::create(&name, project::Target::Library)?;
+                    } else {
+                        project::create(&name, project::Target::Application)?;
+                    }
+                }
+
+                Project::Build => {
+                    project::build()?;
+                }
+
+                Project::Run => {
+                    project::run()?;
+                }
+            },
         }
 
         Ok(())
