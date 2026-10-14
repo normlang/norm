@@ -1,5 +1,7 @@
 use clap::{Args, Parser, Subcommand};
+use normlib::file::normspace;
 use normlib::file::project;
+use normlib::file::workspace;
 
 #[derive(Parser, Debug)]
 #[command(about = "Command-line interface (CLI) for managing Norm code", version, long_about = None)]
@@ -90,13 +92,13 @@ impl Application {
         match cli.command {
             Commands::Normspace { command } => match command {
                 Normspace::Add { name } => {
-                    println!("add normspace {name}");
+                    normspace::create(&name)?;
                 }
             },
 
             Commands::Workspace { command } => match command {
                 Workspace::Add { name } => {
-                    println!("add workspace {name}");
+                    workspace::create(&name)?;
                 }
             },
 
