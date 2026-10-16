@@ -105,9 +105,9 @@ impl Application {
             Commands::Project { command } => match command {
                 Project::Add { name, target } => {
                     if target.lib {
-                        project::create(&name, project::Target::Library)?;
+                        project::Project::create(".", &name, project::Target::Library)?;
                     } else {
-                        project::create(&name, project::Target::Application)?;
+                        project::Project::create(".", &name, project::Target::Application)?;
                     }
                 }
 
