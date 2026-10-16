@@ -98,7 +98,7 @@ impl Application {
 
             Commands::Workspace { command } => match command {
                 Workspace::Add { name } => {
-                    workspace::create(&name)?;
+                    workspace::Workspace::create(&name)?;
                 }
             },
 
