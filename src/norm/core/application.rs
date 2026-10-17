@@ -47,14 +47,6 @@ enum Normspace {
     },
 }
 
-#[derive(Clone, Copy, Debug, clap::ValueEnum)]
-enum Capacity {
-    #[value(name = "1")]
-    Small,
-    #[value(name = "2")]
-    Large,
-}
-
 #[derive(Subcommand, Debug)]
 enum Workspace {
     /// Create new workspace with given name
