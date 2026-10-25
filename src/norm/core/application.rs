@@ -38,12 +38,6 @@ enum Normspace {
         /// Normspace name
         #[arg(required = true)]
         name: String,
-        /// Capacity (maximum number of workspaces):
-        ///   1 - 256
-        ///   2 - 65536
-        ///
-        #[arg(short, long, default_value_t = 1, value_parser = clap::value_parser!(u8).range(1..=2), verbatim_doc_comment)]
-        capacity: u8,
     },
 }
 
@@ -97,8 +91,8 @@ impl Application {
 
         match cli.command {
             Commands::Normspace { command } => match command {
-                Normspace::Add { name, capacity } => {
-                    normspace::Normspace::create(&name, capacity)?;
+                Normspace::Add { name } => {
+                    normspace::Normspace::create(&name)?;
                 }
             },
 
