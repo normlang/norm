@@ -90,7 +90,7 @@ impl Application {
         match cli.command {
             Commands::Normspace { command } => match command {
                 Normspace::Add { name } => {
-                    normspace::Normspace::create(&name)?;
+                    normspace::Normspace::add(&name)?;
                 }
             },
 
